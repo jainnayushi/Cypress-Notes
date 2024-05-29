@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Notes.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<blockquote>
+<h2 id="introduction">Introduction</h2>
+</blockquote>
+<h4 id="why-cypress">Why Cypress?</h4>
+<ul>
+<li>
+<p>In very simple words :</p>
+<ul>
+<li>Let's say you added a button which changes some content onClick of it.</li>
+<li>Now you will check at your end the places it could affect.</li>
+<li>After checking at your end you pushed the code!</li>
+<li>But it <em>Broke the code!</em> at the place you weren't aware, that it would get updated.</li>
+<li>Now you are stuck - about how to make sure that you have fully checked the functionalities</li>
+<li>Here comes to rescue - <code>Cypress : An automation testing</code></li>
+<li>One time hardwork : What is now required is to cover entire codebase functionalities with test cases</li>
+<li>From next time as you update any functionality : Just run these cases and get to know if anything is affected.</li>
+<li>In place of checking everything yourself, now cypress will do it for you! With least chances of missing something out!</li>
+</ul>
+</li>
+<li>
+<p>Cypress runner runs inside our web app and can inject code using javascript as it shares the same origin</p>
+</li>
+</ul>
+<h4 id="features-of-cypress">Features of Cypress</h4>
+<p><img src="2024-05-23-11-55-50.png" alt=""></p>
+<ul>
+<li>Distinguish features are :-</li>
+</ul>
+<ol>
+<li>Snapshots to see what happened at each step</li>
+<li>Automatic waiting</li>
+<li>Easy debugging</li>
+</ol>
+<h2 id="installation">Installation</h2>
+<ol>
+<li>Require node</li>
+<li>Create a react project
+<img src="2024-05-23-11-51-22.png" alt=""></li>
+<li>Install Cypress package <code>npm install cypress --save-dev</code></li>
+<li>Add Cypress open command in the package.json
+<img src="2024-05-23-11-53-06.png" alt=""></li>
+<li>Open the cypress <code>npm run test</code>
+<ul>
+<li>Select E2E Testing option
+<img src="image-2.png" alt="alt text"></li>
+<li>Choose your favorite browser
+<img src="2024-05-23-15-15-54.png" alt=""></li>
+<li>You can see all the default files - Select your file name to start running
+<img src="2024-05-23-13-08-37.png" alt=""></li>
+</ul>
+</li>
+</ol>
+<h2 id="cypress-folder-structure">Cypress Folder Structure</h2>
+<p>Let us understand the folder structure in Cypress. The factors that are included in a
+Cypress folder are explained below:</p>
+<ul>
+<li><code>fixtures</code>: Test data in form of key-value pairs for the tests are maintained here.</li>
+<li><code>e2e</code> : Test cases for the framework are maintained here and is used for <em>comprehensive user journey tests across the entire application</em>.</li>
+<li><code>integration</code>: Test cases for the framework are maintained here and is used for <em>testing specific parts or features interacting within the application</em>.</li>
+<li><code>plugins</code>: Cypress events (prior and post events to be executed for a test) are maintained here.</li>
+<li><code>support</code>: Reusable methods or customized commands, which can be utilised by testcases directly, without object creation are created here.</li>
+<li><code>videos</code>: Executed test steps are recorded in the form of videos and maintained here.</li>
+<li><code>node_modules</code>: Project dependencies from the npm are maintained in this folder. It is the heart of the Cypress project execution.</li>
+<li><code>cypress</code>.json: Default configurations are set in this folder. The values of the current configurations can be modified here, which overrules the default configurations.</li>
+<li><code>package.json</code>: Dependencies and scripts for the projects are maintained in this folder.</li>
+</ul>
+<h2 id="first-test--default-react-page">First Test : Default React Page</h2>
+<ul>
+<li>Create a file with <code>.cy.js</code> extension in the e2e folder in the cypress folder
+<img src="2024-05-23-16-20-30.png" alt=""></li>
+</ul>
+<h4 id="structure-of-basic-test">Structure of basic test</h4>
+<ol>
+<li>Test suite name has to be provided within the describe function.</li>
+<li>Test case names within a test suite have to be provided within the same or you have to specify the function.</li>
+<li>Test steps within a test case have to be implemented inside the it/specify block.</li>
+</ol>
+<pre class="hljs"><code><div>describe(<span class="hljs-string">"My First Test"</span>, () =&gt; {
+  it(<span class="hljs-string">"Landing Page"</span>, () =&gt; {
+    cy.visit(<span class="hljs-string">"http://localhost:3000"</span>);
+    cy.contains(<span class="hljs-string">"Learn React"</span>);
+  });
+});
+</div></code></pre>
+<ul>
+<li>Select your file name to start running
+<img src="2024-05-23-13-08-37.png" alt="">
+<em>Congratulations!</em>
+<img src="image-3.png" alt="alt text"></li>
+</ul>
+<hr>
+<h2 id="lets-dive-deep">Let's dive deep</h2>
+<h3 id="element-selectors">Element Selectors</h3>
+<ol>
+<li><code>cy.get('button').click()</code> <em>Never Worst</em> : Too generic, no context.</li>
+<li><code>cy.get('.btn.btn-large').click()</code> <em>Never Bad</em> : Coupled to styling. Highly subject to change.</li>
+<li><code>cy.get('#main').click()</code> <em>Sparingly Better</em> : But still coupled to styling or JS event listeners.</li>
+<li><code>cy.get('[name=&quot;submission&quot;]').click()</code> <em>Sparingly</em> : Coupled to the name attribute which has HTML semantics.</li>
+<li><code>cy.contains('Submit').click()</code> <em>Depends Much better</em> : But still coupled to text content that may change.</li>
+<li><code>cy.get('[data-cy=&quot;submit&quot;]').click()</code> <strong>Always Best</strong> :Isolated from all changes.</li>
+</ol>
+<h3 id="basic-constructs-of-cypress">Basic Constructs of Cypress :-</h3>
+<h4 id="describe">describe():</h4>
+<p>This method is used to group related test cases. It takes two arguments: a string that describes the group of test cases and a callback function that contains the individual test cases.</p>
+<h4 id="it">it():</h4>
+<p>This method is used to define a test case. It takes two arguments: a string that describes the test case and a callback function that contains the actual test code</p>
+<h4 id="before">before():</h4>
+<p>This method is used to run a setup function before any test case in a particularly described block. It can be used to set up the test environment, initialize variables, and perform other setup tasks.</p>
+<h4 id="after">after():</h4>
+<p>This method is used to run a cleanup function after all the test cases in a particularly described block have finished running. It can be used to clean up the test environment, close open connections, and perform other cleanup tasks.</p>
+<h4 id="beforeeach">beforeEach():</h4>
+<p>This method is used to run a setup function before each test case in a particularly described block. It can be used to reset the state of the test environment and perform other setup tasks.</p>
+<h4 id="aftereach">afterEach():</h4>
+<p>This method is used to run a cleanup function after each test case in a particularly described block has finished running. It can be used to reset the state of the test environment and perform other cleanup tasks.</p>
+<h4 id="skip">.skip():</h4>
+<p>When dealing with a large codebase and wanting to concentrate on specific tests or subsets of tests, the .skip() function provides a handy means to temporarily prevent certain tests from being executed.</p>
+<h2 id="cypress-basic-commands">Cypress Basic Commands</h2>
+<h4 id="and">and</h4>
+<p>It is used to create an assertion and is an alias of .should ().</p>
+<pre class="hljs"><code><div><span class="hljs-comment">//element is visible &amp; enabled</span>
+cy.get(<span class="hljs-string">"#txt"</span>).should(<span class="hljs-string">"be.visible"</span>).and(<span class="hljs-string">"be.enabled"</span>);
+<span class="hljs-comment">//element is checked</span>
+cy.contains(<span class="hljs-string">"Subject"</span>).and(<span class="hljs-string">"be.checked"</span>);
+</div></code></pre>
+<h4 id="as">as</h4>
+<p>It provides an alias for later usage.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">//alias element as parent</span>
+cy.get(<span class="hljs-string">"#txt"</span>).find(<span class="hljs-string">"li"</span>).first().as(<span class="hljs-string">"parent"</span>);
+</div></code></pre>
+<h4 id="blur">blur</h4>
+<p>It blurs an element in focus.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">//blur input</span>
+cy.get(<span class="hljs-string">"#txt"</span>).type(<span class="hljs-string">"abc"</span>).blur();
+</div></code></pre>
+<h4 id="check">check</h4>
+<p>It checks radio buttons or checkboxes and is applied to elements having input tags.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">//checks element having class attribute chkbox</span>
+cy.get(<span class="hljs-string">".chkbox"</span>).check();
+</div></code></pre>
+<h4 id="children">children</h4>
+<p>It obtains the sub elements of an element.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">//obtains children of element n</span>
+cy.get(<span class="hljs-string">"n"</span>).children();
+</div></code></pre>
+<h4 id="clear">clear</h4>
+<p>It removes the value from textarea or input.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">//removes input abc</span>
+cy.get(<span class="hljs-string">"#txt"</span>).type(<span class="hljs-string">"abc"</span>).clear();
+</div></code></pre>
+<h4 id="clearcookie">clearCookie</h4>
+<p>It removes a particular browser cookie.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">//clear abc cookie</span>
+cy.clearCookie(<span class="hljs-string">"abc"</span>);
+</div></code></pre>
+<h4 id="clearcookies">clearCookies</h4>
+<p>It removes the browser cookies from an existing domain and subdomain.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">//clear all cookies</span>
+cy.clearCookies();
+</div></code></pre>
+<h4 id="clearlocalstorage">clearLocalStorage</h4>
+<p>It removes the local Storage data from an existing domain and subdomain.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">//clear all local storage</span>
+cy.clearLocalStorage();
+</div></code></pre>
+<h4 id="click">click</h4>
+<p>It clicks an element in Document Object Model (DOM).</p>
+<pre class="hljs"><code><div><span class="hljs-comment">//click on element with id txt</span>
+cy.get(<span class="hljs-string">"#txt"</span>).click();
+</div></code></pre>
+<h4 id="contains">contains</h4>
+<p>It obtains an element having a specific text. The element can have more than the text and still match.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">//returns element in #txt having Tutor text</span>
+cy.get(<span class="hljs-string">"#txt"</span>).contains(<span class="hljs-string">"Tutor"</span>);
+</div></code></pre>
+<h4 id="dblclick">dblclick</h4>
+<p>It double-clicks an element in Document Object Model (DOM).</p>
+<pre class="hljs"><code><div><span class="hljs-comment">//double clicks element with id txt</span>
+cy.get(<span class="hljs-string">"#txt"</span>).dblclick();
+</div></code></pre>
+<h4 id="debug">debug</h4>
+<p>It fixes a debugger and log values are returned by prior command.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">//pause to debug at start of command</span>
+cy.get(<span class="hljs-string">"#txt"</span>).debug();
+</div></code></pre>
+<h4 id="document">document</h4>
+<p>It obtains window.document on the active page.</p>
+<pre class="hljs"><code><div>cy.document();
+</div></code></pre>
+<h4 id="each">each</h4>
+<p>It iterates through an array having the property length.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">//iterate through individual li</span>
+cy.get(<span class="hljs-string">'li'</span>).each(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {...})
+</div></code></pre>
+<h4 id="end">end</h4>
+<p>It ends a command chain.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">//obtain null instead of input</span>
+cy.contains(<span class="hljs-string">"input"</span>).end();
+</div></code></pre>
+<h4 id="eq">eq</h4>
+<p>It refers to an element at a particular index in an array of elements.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">//obtain third td in tr</span>
+cy.get(<span class="hljs-string">"tr&gt;td"</span>).eq(<span class="hljs-number">2</span>);
+</div></code></pre>
+<h4 id="exec">exec</h4>
+<p>It runs a system command.</p>
+<pre class="hljs"><code><div>cy.exec(<span class="hljs-string">"npm init"</span>);
+</div></code></pre>
+<h4 id="find">find</h4>
+<p>It obtains the descendant elements of a particular locator.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">//obtain td from tr</span>
+cy.get(<span class="hljs-string">"tr"</span>).find(<span class="hljs-string">"td"</span>);
+</div></code></pre>
+<h4 id="first">first</h4>
+<p>It obtains the first element from a group of elements.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">//obtain first td in tr</span>
+cy.get(<span class="hljs-string">"tr&gt;td"</span>).first();
+</div></code></pre>
+<h4 id="get">get</h4>
+<p>It obtains single or multiple elements by locator.
+It obtains the descendant elements of a particular locator.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">//obtain all td from tr in list</span>
+cy.get(<span class="hljs-string">"tr&gt;td"</span>);
+</div></code></pre>
+<h4 id="getcookie">getCookie</h4>
+<p>It obtains a particular browser cookie by its name.</p>
+<pre class="hljs"><code><div>cy.getCookie(<span class="hljs-string">"abc"</span>);
+</div></code></pre>
+<h4 id="getcookies">getCookies</h4>
+<p>It obtains all the cookies</p>
+<pre class="hljs"><code><div>cy.getCookies();
+</div></code></pre>
+<h4 id="go">go</h4>
+<p>It moves forward or backward to the next or previous URL in browser history.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">//like clicking back button</span>
+cy.go(<span class="hljs-string">"back"</span>);
+<span class="hljs-comment">//like clicking forward button</span>
+cy.go(<span class="hljs-string">"forward"</span>);
+</div></code></pre>
+<h4 id="visit">visit</h4>
+<p>It launches an URL.</p>
+<pre class="hljs"><code><div>cy.visit(<span class="hljs-string">"https://www.tutorialspoint.com/index.htm"</span>);
+</div></code></pre>
+<h4 id="next">next</h4>
+<p>It obtains the immediate sibling of an element within a group of elements in Document
+Object Model (DOM).</p>
+<pre class="hljs"><code><div><span class="hljs-comment">//gives the following link in element l.</span>
+cy.get(<span class="hljs-string">"l a:first"</span>).next();
+</div></code></pre>
+<h4 id="parent">parent</h4>
+<p>It obtains the parent element from a group of elements in DOM.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">//get parent of element with class h</span>
+cy.get(<span class="hljs-string">".h"</span>).parent();
+</div></code></pre>
+<h4 id="should">should</h4>
+<p>It is used to create an assertion and is an alias of .and ().</p>
+<pre class="hljs"><code><div><span class="hljs-comment">//assert element is visible &amp; enabled</span>
+cy.get(<span class="hljs-string">"#txt"</span>).should(<span class="hljs-string">"be.visible"</span>).and(<span class="hljs-string">"be.enabled"</span>);
+</div></code></pre>
+<h4 id="wait">wait</h4>
+<p>Wait for a certain time in milliseconds or for an aliased element prior to moving the following step.</p>
+<pre class="hljs"><code><div>cy.wait(<span class="hljs-number">1000</span>);
+</div></code></pre>
+<h4 id="title">title</h4>
+<p>It obtains the document.title of the active page.</p>
+<pre class="hljs"><code><div>cy.title();
+</div></code></pre>
+<h4 id="viewport">viewport</h4>
+<p>It manages the dimension and positioning of the screen.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// viewport to 100px and 500px</span>
+cy.viewport(<span class="hljs-number">100</span>, <span class="hljs-number">500</span>);
+</div></code></pre>
+<h4 id="log">log</h4>
+<p>It prints the messages to the Command Log.</p>
+<pre class="hljs"><code><div>cy.log(<span class="hljs-string">"Cypress logging "</span>);
+</div></code></pre>
+<h4 id="reload">reload</h4>
+<p>It is used for page reloading.</p>
+<pre class="hljs"><code><div>cy.reload();
+</div></code></pre>
+<hr>
+<h2 id="example--todo-app-code">Example : Todo App Code</h2>
+<ul>
+<li>Let's create cypress test for the following code</li>
+<li>It has 4 major functionalities
+<ol>
+<li>List todos</li>
+<li>Add a new todo</li>
+<li>Edit a todo</li>
+<li>Delete a todo</li>
+</ol>
+</li>
+<li>This implies we will need 4 tests</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> React, { useState, useEffect } <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;
+<span class="hljs-keyword">import</span> { Button, Checkbox, Input, List } <span class="hljs-keyword">from</span> <span class="hljs-string">"antd"</span>;
+<span class="hljs-keyword">import</span> axios <span class="hljs-keyword">from</span> <span class="hljs-string">"axios"</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">"antd"</span>;
+
+<span class="hljs-keyword">const</span> Todo = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-keyword">const</span> [todos, setTodos] = useState([]);
+  <span class="hljs-keyword">const</span> [newTodo, setNewTodo] = useState(<span class="hljs-string">""</span>);
+
+  useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    axios.get(<span class="hljs-string">"https://dummyjson.com/todos"</span>).then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> {
+      setTodos(response.data.todos);
+    });
+  }, []);
+
+  <span class="hljs-keyword">const</span> handleEdit = <span class="hljs-function">(<span class="hljs-params">index</span>) =&gt;</span> {
+    <span class="hljs-keyword">const</span> todo = todos[index];
+    <span class="hljs-keyword">const</span> updatedTodo = prompt(<span class="hljs-string">"Edit todo:"</span>, todo.todo);
+
+    <span class="hljs-keyword">if</span> (updatedTodo) {
+      <span class="hljs-keyword">const</span> newTodos = [...todos];
+      newTodos[index] = { ...todo, <span class="hljs-attr">todo</span>: updatedTodo };
+      setTodos(newTodos);
+    }
+  };
+
+  <span class="hljs-keyword">const</span> handleDelete = <span class="hljs-function">(<span class="hljs-params">index</span>) =&gt;</span> {
+    <span class="hljs-keyword">const</span> newTodos = todos.filter(<span class="hljs-function">(<span class="hljs-params">_, i</span>) =&gt;</span> i !== index);
+    setTodos(newTodos);
+  };
+
+  <span class="hljs-keyword">const</span> handleAdd = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">if</span> (newTodo) {
+      <span class="hljs-keyword">const</span> newTodos = [{ <span class="hljs-attr">todo</span>: newTodo, <span class="hljs-attr">completed</span>: <span class="hljs-literal">false</span> }, ...todos];
+      setTodos(newTodos);
+      setNewTodo(<span class="hljs-string">""</span>);
+    }
+  };
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Input</span>
+        <span class="hljs-attr">value</span>=<span class="hljs-string">{newTodo}</span>
+        <span class="hljs-attr">onChange</span>=<span class="hljs-string">{(e)</span> =&gt;</span> setNewTodo(e.target.value)}
+        onPressEnter={handleAdd}
+      /&gt;
+      <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{handleAdd}</span>&gt;</span>Add<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">List</span>
+        <span class="hljs-attr">dataSource</span>=<span class="hljs-string">{todos}</span>
+        <span class="hljs-attr">renderItem</span>=<span class="hljs-string">{(todo,</span> <span class="hljs-attr">index</span>) =&gt;</span> (
+          <span class="hljs-tag">&lt;<span class="hljs-name">List.Item</span>
+            <span class="hljs-attr">actions</span>=<span class="hljs-string">{[</span>
+              &lt;<span class="hljs-attr">Button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> handleEdit(index)}&gt;Edit<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span>,
+              <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> handleDelete(index)}&gt;Delete<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span>,
+            ]}
+          &gt;
+            <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>{todo.todo}<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+          <span class="hljs-tag">&lt;/<span class="hljs-name">List.Item</span>&gt;</span>
+        )}
+      /&gt;
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+};
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Todo;
+</div></code></pre>
+<h2 id="cypress-test-for-todo">Cypress Test for Todo</h2>
+<ul>
+<li>Let us now apply all the concepts in our todo test cases.</li>
+<li><code>Setup with beforeEach</code>: Ensures the application is in a consistent state before each test by visiting the base URL.</li>
+<li><code>Display Existing Todos</code>:
+<ul>
+<li>Uses cy.request to fetch todos from an external API and verifies the response status.</li>
+<li>Checks if the list container exists and the number of items matches the fetched data.</li>
+</ul>
+</li>
+<li><code>Add a New Todo</code>:
+Simulates user input to add a new todo and verifies if it appears as the first item in the list.</li>
+<li><code>Edit an Existing Todo</code>:
+Simulates clicking the edit button, stubbing the prompt to simulate user input, and verifying the change.</li>
+<li><code>Delete an Existing Todo</code>:
+Records the initial number of todos, simulates deleting the first item, and verifies the count is reduced by one.</li>
+<li>Thus, this script demonstrates typical end-to-end testing scenarios for a Todo application using Cypress, including interaction with elements and validating the application's behavior in response to user actions.</li>
+<li>Comments are added before each line for better explanation.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">// cypress/e2e/todo.cy.js</span>
+
+<span class="hljs-comment">// Describe block to group related tests for the "Todo Application"</span>
+describe(<span class="hljs-string">"Todo Application"</span>, () =&gt; {
+  <span class="hljs-comment">// beforeEach hook to run setup code before each test</span>
+  beforeEach(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-comment">// Visit the application URL before each test</span>
+    cy.visit(<span class="hljs-string">"http://localhost:3000"</span>);
+    <span class="hljs-comment">// Note: Adjust the URL according to your development server</span>
+  });
+
+  <span class="hljs-comment">// Test to verify that existing todos are displayed correctly</span>
+  it(<span class="hljs-string">"should display existing todos"</span>, () =&gt; {
+    <span class="hljs-comment">// Fetch todos from an external API and check the response</span>
+    cy.request(<span class="hljs-string">"https://dummyjson.com/todos"</span>).then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> {
+      <span class="hljs-comment">// Ensure the response status is 200 (OK)</span>
+      expect(response.status).to.eq(<span class="hljs-number">200</span>);
+      <span class="hljs-comment">// Extract todos from the response body</span>
+      <span class="hljs-keyword">const</span> todos = response.body.todos;
+
+      <span class="hljs-comment">// Check if the list container exists in the DOM</span>
+      cy.get(<span class="hljs-string">".ant-list-items"</span>).should(<span class="hljs-string">"exist"</span>);
+
+      <span class="hljs-comment">// Verify the number of displayed todos matches the fetched data</span>
+      cy.get(<span class="hljs-string">".ant-list-item"</span>).should(<span class="hljs-string">"have.length"</span>, todos.length);
+    });
+  });
+
+  <span class="hljs-comment">// Test to verify adding a new todo</span>
+  it(<span class="hljs-string">"should add a new todo"</span>, () =&gt; {
+    <span class="hljs-keyword">const</span> newTodoText = <span class="hljs-string">"New Cypress Todo"</span>;
+
+    <span class="hljs-comment">// Type new todo text in the input field and press Enter</span>
+    cy.get(<span class="hljs-string">"input"</span>).type(newTodoText).type(<span class="hljs-string">"{enter}"</span>);
+
+    <span class="hljs-comment">// Verify the new todo is added as the first item in the list</span>
+    cy.get(<span class="hljs-string">".ant-list-item"</span>).first().should(<span class="hljs-string">"contain.text"</span>, newTodoText);
+  });
+
+  <span class="hljs-comment">// Test to verify editing an existing todo</span>
+  it(<span class="hljs-string">"should edit an existing todo"</span>, () =&gt; {
+    <span class="hljs-keyword">const</span> editedTodoText = <span class="hljs-string">"Edited Cypress Todo"</span>;
+
+    <span class="hljs-comment">// Edit the first todo in the list</span>
+    cy.get(<span class="hljs-string">".ant-list-item"</span>)
+      .first()
+      .within(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+        <span class="hljs-comment">// Click the Edit button of the first todo</span>
+        cy.contains(<span class="hljs-string">"Edit"</span>).click();
+      });
+
+    <span class="hljs-comment">// Simulate user input in the prompt dialog for editing</span>
+    cy.window().then(<span class="hljs-function">(<span class="hljs-params">win</span>) =&gt;</span> {
+      <span class="hljs-comment">// Stub the prompt to return the edited text</span>
+      cy.stub(win, <span class="hljs-string">"prompt"</span>).returns(editedTodoText);
+    });
+
+    <span class="hljs-comment">// Confirm the edit action by clicking the Edit button again</span>
+    cy.get(<span class="hljs-string">".ant-list-item"</span>).first().contains(<span class="hljs-string">"Edit"</span>).click();
+
+    <span class="hljs-comment">// Verify the edited todo text is displayed correctly</span>
+    cy.get(<span class="hljs-string">".ant-list-item"</span>).first().should(<span class="hljs-string">"contain.text"</span>, editedTodoText);
+  });
+
+  <span class="hljs-comment">// Test to verify deleting an existing todo</span>
+  it(<span class="hljs-string">"should delete an existing todo"</span>, () =&gt; {
+    <span class="hljs-comment">// Get the initial number of todos in the list</span>
+    cy.get(<span class="hljs-string">".ant-list-item"</span>).then(<span class="hljs-function">(<span class="hljs-params">initialItems</span>) =&gt;</span> {
+      <span class="hljs-keyword">const</span> initialLength = initialItems.length;
+
+      <span class="hljs-comment">// Delete the first todo in the list</span>
+      cy.get(<span class="hljs-string">".ant-list-item"</span>)
+        .first()
+        .within(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+          <span class="hljs-comment">// Click the Delete button of the first todo</span>
+          cy.contains(<span class="hljs-string">"Delete"</span>).click();
+        });
+
+      <span class="hljs-comment">// Get the updated number of todos in the list</span>
+      cy.get(<span class="hljs-string">".ant-list-item"</span>).then(<span class="hljs-function">(<span class="hljs-params">updatedItems</span>) =&gt;</span> {
+        <span class="hljs-keyword">const</span> updatedLength = updatedItems.length;
+
+        <span class="hljs-comment">// Verify the number of todos is reduced by one</span>
+        expect(updatedLength).to.equal(initialLength - <span class="hljs-number">1</span>);
+      });
+    });
+  });
+});
+</div></code></pre>
+<ul>
+<li>Cypress Window Result</li>
+</ul>
+<p><img src="image-4.png" alt="alt text"></p>
+<hr>
+
+</body>
+</html>
